@@ -26,19 +26,18 @@ class MicroBlogger
     
   end
   
-  def follower_list #still to test
+  def follower_list 
     screen_names = []
     @client.followers.each { |follower| screen_names << @client.user(follower).screen_name}
     screen_names.empty? ? (puts "Ummm, you dont have any followers :(") : (puts screen_names) #for testing 
     screen_names
   end
   
-  def spam_my_friends(message) #test
+  def spam_my_friends(message) 
     followers = follower_list
     followers.each { |target| dm(target,message)} 
   end
   
-
   def everyones_last_tweet
     friends_obj = @client.friends
     friends=[]
@@ -54,15 +53,13 @@ class MicroBlogger
       puts ""
     end
   end
-    
-
+  
   def shorten(url)
     Bitly.use_api_version_3
     bitly = Bitly.new('hungryacademy', 'R_430e9f62250186d2612cca76eee2dbc6')
     return bitly.shorten(url).short_url
   end
         
-  
   def run
     puts "Welcome to the JSL Twitter Client"
     command = ""
@@ -80,11 +77,10 @@ class MicroBlogger
         when 'turl' then tweet(parts[1..-2].join(" ") + " " + shorten(parts[-1]))
         else
           puts "Sorry, I don't know how to #{command}"
-        end
+      end
     end
-  
   end
-  end
+end
   
 
 blogger = MicroBlogger.new
